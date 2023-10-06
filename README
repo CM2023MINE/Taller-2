@@ -1,0 +1,155 @@
+# Regresión y Análisis de Datos en el Contexto del Apoyo del Banco Mundial a Países en Desarrollo 📋
+
+El objetivo de este taller es evaluar las habilidades en la aplicación de técnicas de regresión para descubrir insights y sugerir acciones al negocio, enfocado en el apoyo financiero y técnico del Banco Mundial a países en desarrollo.
+
+## Contenido del Repositorio 📖
+
+Este repositorio contiene los siguientes elementos:
+
+1. **Jupyter Notebooks**: Archivos Jupyter Notebook que contienen el código y el análisis de datos, archivo llamado **Regresion Lineal.ipynb**.
+
+2. **gapminder.csv**: El conjunto de datos utilizado para el análisis se obtuvo de [gapminder](https://drive.google.com/file/d/1zsFX4PUehK_rmLtP-1hqPnSo86VMHDAm/view?pli=1).
+
+3. **Informe Ejecutivo**: Un informe ejecutivo que resume las recomendaciones para los inversionistas.
+
+4. **Presentacion Ejeuctiva**: Fuera del readme se encuentra una presentacion ejecutiva de los resultados del taller - Resumen_Ejecutiva.pdf 
+
+## Actividades y Entregables 📝
+
+### 1. Entendimiento Inicial de Datos
+
+- **Dimensiones del Dataset**: El dataset consta de **178** filas y **16** columnas.
+- **Tipos de Datos**: El dataset contiene atributos de diferentes tipos, como texto, números(tipo flotante).
+
+country                  object
+incomeperperson         float64
+alcconsumption          float64
+armedforcesrate         float64
+breastcancerper100th    float64
+co2emissions            float64
+femaleemployrate        float64
+hivrate                 float64
+internetuserate         float64
+lifeexpectancy          float64
+oilperperson            float64
+polityscore             float64
+relectricperperson      float64
+suicideper100th         float64
+employrate              float64
+urbanrate               float64
+
+- **Atributos Importantes (Top 5)**:
+
+    1. ```Internetuserate```: El acceso a internet es una señal de infraestructura y digitalización, lo que se ve correlacionado con un PIB más alto. (representa el número de usuarios de internet por cada 100 personas).
+    
+    2. ```lifeexpectancy```: Una expectativa de vida más alta generalmente indica mejores condiciones de salud y calidad de vida, lo que se correlaciona con un PIB más alto.
+    
+    3. ```urbanrate```: Una alta tasa de urbanización podría estar relacionada con el desarrollo económico y la industrialización de un pais.
+    
+    4. ```armedforcesrate```: Un alto porcentaje de la fuerza laboral en las fuerzas armadas podría indicar gastos militares significativos o una situación de inestabilidad que podría afectar al PIB.
+    
+    5. ```employrate```: Una alta tasa de empleo generalmente es indicativa de una economía saludable.
+
+### 2. Estrategia de Análisis 
+
+Para abordar la necesidad del negocio de identificar las mejores opciones para que el Banco Mundial otorgue prestamos a determinados paises, se utilizará la siguiente estrategia:
+
+- **Análisis Descriptivo**: Se calcularán estadísticas descriptivas para comprender la distribución de los atributos clave, como percentiles, mediana, moda, desviación estandar (Limpieza de datos).
+
+- **Visualización de Datos**: Se utilizarán gráficos y visualizaciones para identificar patrones y tendencias, por ejemplo, histogramas, grafica de barras, diagrama de caja y bigotes.
+
+- **Análisis Multivariado**: Se explorarán relaciones entre diferentes atributos para obtener insights más profundos, por ejemplo se realizo mapa de calor al momento de correlacionar variables o atributos del dataset, analisis de pareto.
+
+### 3. Entrenamiento del Modelo de Regresión
+
+En esta sección, se aplican varios modelos de regresión para identificar cómo diferentes indicadores afectan el ingreso per cápita (incomeperperson) de un país. Los indicadores incluyen la tasa urbana (urbanrate), la esperanza de vida (lifeexpectancy), la tasa de fuerzas armadas (armedforcesrate) y la tasa de usuarios de internet (internetuserate). Se utiliza el paquete statsmodel para la regresión múltiple y se abordan problemas potenciales como la multicolinealidad. Además, se emplea scikit-learn para la regresión lineal y la selección de características.
+
+* **Regresión Múltiple con Statsmodel**:
+Se aplica regresión múltiple para entender la relación entre el ingreso per cápita y varios indicadores. Los modelos son:
+
+  1. incomeperperson ~urbanrate
+  2. incomeperperson ~lifeexpectancy
+  3. incomeperperson ~armedforcesrate
+  4. incomeperperson ~internetuserate
+  5. incomeperperson ~urbanrate+lifeexpectancy
+  6. incomeperperson ~armedforcesrate+internetuserate
+  7. incomeperperson ~urbanrate+internetuserate
+  8. incomeperperson ~urbanrate+internetuserate+lifeexpectancy
+
+        >Cada modelo ayuda a entender la influencia de uno o más indicadores en el ingreso per cápita.  
+
+* **Multicolinealidad y Factor de Inflación de la Varianza (VIF)**:
+Se evalua la multicolinealidad usando el VIF. Los criterios son:
+
+  - VIF = 1: No correlacionadas.
+  - VIF < 5: Correlación moderada, aceptable.
+  - VIF > 5: Alta correlación, considerar la eliminación del modelo.
+
+    > Esta evaluación asegura que no haya una correlación excesiva entre las variables independientes, lo que podría distorsionar los resultados y hacer difícil la interpretación de los coeficientes de regresión.
+
+* **Regresión Lineal con Scikit-learn**:
+Se utiliza scikit-learn para entrenar modelos de regresión lineal, evaluar su rendimiento y realizar la selección de características para optimizar la precisión del modelo. Este proceso incluirá la preparación de datos, la división en conjuntos de entrenamiento y prueba, y la evaluación de métricas de rendimiento, como el error cuadrado medio.
+
+### 5. Generación de Resultados
+
+En esta sección, se comunica los resultados clave obtenidos de nuestro modelo de regresión. Se Presenta insights valiosos sobre la relación entre el PIB per cápita y varios indicadores clave, y cómo estos pueden ser utilizados para informar políticas que promuevan la estabilidad y el crecimiento económico en países en desarrollo.
+
+Atributos Importantes y su Impacto en el PIB per cápita
+
+1. **Internetuserate**:
+
+    * **Insight**: se observa una correlación positiva significativa entre el acceso a Internet y el PIB per cápita. Países con mayor acceso a Internet tienden a tener un PIB per cápita más alto.
+
+    * **Acción Sugerida**: Invertir en la infraestructura digital y aumentar la accesibilidad a Internet para impulsar la digitalización y la innovación en la economía.
+
+2. **Lifeexpectancy**: 
+
+   * **Insight**: Una mayor expectativa de vida se asocia con mejores servicios de salud y calidad de vida, correlacionándose positivamente con un PIB más alto.
+
+   * **Acción Sugerida**: Invertir en el sistema de salud, promover estilos de vida saludables para mejorar la longevidad y la calidad de vida, lo que a su vez podría impulsar la productividad económica.
+
+3. **Urbanrate**:
+
+   * **Insight**: La urbanización está asociada con el desarrollo económico. Una tasa de urbanización más alta indica un nivel de industrialización y desarrollo económico elevado.
+
+    * **Acción Sugerida**: Fomentar políticas de urbanización planificada para garantizar que el crecimiento de las ciudades sea sostenible y conducente a la prosperidad económica.impulsar la productividad económica.
+
+4. **Armedforcesrate**:
+
+   * **Insight**: Un porcentaje elevado de la fuerza laboral en las fuerzas armadas puede ser un indicador de inestabilidad o de una inversión significativa en defensa, lo que podría tener implicaciones mixtas para el PIB.
+
+    * **Acción Sugerida**:  Evaluar y balancear el gasto militar para asegurar la estabilidad sin comprometer el crecimiento económico y el bienestar social.
+
+5. **Employrate**:
+
+   * **Insight**: Una tasa de empleo elevada se asocia generalmente con una economía robusta y un PIB per cápita alto.
+
+    * **Acción Sugerida**:  Implementar políticas que promuevan la creación de empleo, la capacitación y la educación para garantizar una fuerza laboral habilidosa y empleada.
+
+### Conclusiones y Recomendaciones
+---
+Basado en los insights derivados del modelo de regresión, recomendamos un enfoque multifacético para mejorar el PIB per cápita y, por lo tanto, la capacidad de un país para administrar y reembolsar préstamos de manera efectiva. Las estrategias incluyen la mejora de la infraestructura digital, la inversión en salud y educación, la promoción de la urbanización planificada y sostenible, y el equilibrio del gasto militar con otras necesidades socioeconómicas.
+
+Al implementar políticas enfocadas en estos indicadores clave, los países en desarrollo no solo pueden mejorar su PIB per cápita, sino también indicar al Banco Mundial y a otros organismos internacionales su compromiso con la estabilidad económica y el crecimiento sostenible. Esto, en consecuencia, puede fortalecer la confianza en su capacidad para gestionar y reembolsar préstamos de manera eficiente y efectiva.
+
+## Requisitos de Ejecución ⚙️
+
+Para ejecutar los Jupyter Notebooks y reproducir el análisis, sigue los pasos a continuación:
+
+1. Abre los Jupyter Notebooks en orden **Regresion Lineal.ipynb**.
+
+## Dataset 📚
+
+El dataset utilizado para este análisis está disponible en **gapminder.csv** y se obtuvo de [gapminder](https://drive.google.com/file/d/1zsFX4PUehK_rmLtP-1hqPnSo86VMHDAm/view?pli=1).
+
+
+## Referencias 🎯
+
+ 1. [seaborn](https://seaborn.pydata.org/).
+ 2. [pandas](https://pandas.pydata.org/).
+ 3. [matplotlib](https://matplotlib.org/).
+ 4. [sklearn](https://scikit-learn.org/stable/)
+
+## Autor 👤
+
+**Carlos Fernando Montana Herrera**
